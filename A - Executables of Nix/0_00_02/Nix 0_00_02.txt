@@ -1,0 +1,31 @@
+• Se ha vuelto a escribir todo el código del juego.
+• Se ha cambiado la vista de "prespectiva"(3D simulado) a "plataforma"(2D).
+• Se han vuelto a hacer todas las texturas.
+• Se ha vuelto a crear el personaje principal.
+• Se han creado entidades enemigas estandard.
+• Se ha diseñado una inteligencia artificial (IA) para las entidades enemigas estandards.
+ - Las entidades si ven al personaje lo siguen.
+ - Las entidades son capaces de saltar obstáculos dependiendo de la altura máxima que pueden saltar, la velocidad a la que se desplazan y la altura del obstáculo a saltar.
+ - Si las entidades no pueden saltar el obstáculo invierten su sentido.
+
+• Se han aplicado nuevas animaciones al personaje principal:
+ - Parado.
+ - Andar.
+ - Correr.
+ - Saltar.
+ - Caída suave.
+ - Caída fuerte.
+ - Dash vertical (actualmente sin utilidad)
+ - Agarrarse a una pared.
+ - Saltar desde una pared.
+ - Trepar el borde de un obstáculo.
+
+• Añadidas las bases del sistema de combate.
+• Añadidos saltos desde la pared (el jugador solo puede hacer 3 saltos seguidos).
+• Añadido sistema para graduar la velocidad general (cámara lenta).
+• Los enemigos colisionan entre ellos.
+• Añadida información en la sala inicial sobre como contactar con Triunity Studios y reportar errores.
+• Añadidas indicaciones de controles que siguen al personaje.
+• Añadida información de la versión en la parte inferior izquierda de la pantalla.
+• Añadida información de la velocidad de calculos en la parte superior izquiertda de la pantalla 
+• Añadido logo del instalador 

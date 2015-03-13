@@ -1,0 +1,52 @@
+if /*DETONATOR*/
+{
+    if (player_viewDir = 1)
+     {
+        sprite_index = /*SPRITE RIGHT*/;
+     }
+    if (player_viewDir = -1)
+     {
+        sprite_index = /*SPRITE LEFT*/;
+     }   
+    if (cont_spr_/*VAR NAME SPRITE*/ = 0)
+     {
+        image_index = 0;
+        cont_/*VAR NAME SPRITE*/ = 1;
+     }
+     
+    /*VAR NAME SPRITE*/ = 1; 
+    image_speed = /*velocity*/;
+    spriteLoop = /*0 or 1 (0=Loop OFF / 1=Loop ON)*/;
+
+}
+else
+{
+    /*VAR NAME SPRITE*/ = 0;
+    cont_/*VAR NAME SPRITE*/ = 0;
+}
+
+
+
+//---------------------------------------------------//
+
+
+
+
+if /*DETONATOR*/
+{
+    if (player_viewDir = 1) { sprite_index = /*SPRITE RIGHT*/; }
+    if (player_viewDir = -1) { sprite_index = /*SPRITE LEFT*/; }   
+    if (cont_/*VAR NAME SPRITE*/ = 0) { image_index = 0; cont_/*VAR NAME SPRITE*/ = 1; }
+    /*VAR NAME SPRITE*/ = 1; 
+    image_speed = /*velocity*/;
+    spriteLoop = /*0 or 1 (0=Loop OFF / 1=Loop ON)*/;
+}else{ 
+    /*VAR NAME SPRITE*/ = 0;  
+    cont_/*VAR NAME SPRITE*/ = 0; 
+}
+
+
+
+/////--------------------------------------/////
+
+if (spriteLoop = 0) && (image_index >= image_number - 1) { image_index = image_number -1; image_speed = 0; }

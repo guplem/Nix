@@ -1,0 +1,31 @@
+Básico:
+ - Andar (L/R)
+ - Sprint/Correr (L/R)
+
+Derrapar
+ - Derrapar si está cambiando de dirección andando (L/R)
+ - Derrapar si está cambiando de dirección corriendo (L/R)
+
+Escalada:
+ - Subida del personaje cuando se queaf agarrado del borde del bloque (L/R)
+
+Salto:
+ - Inicio salto (L/R)
+ - Ir subiendo (L/R)
+ - Cambio de ir subiendo a bajando (L/R)
+ - Ir bajando (L/R)
+ - Bajar en angulo de 45º en salto cuando va sprint saltando (L/R)
+ - Pasar caer a tocar el suelo (L/R)
+
+Salto pared:
+ - Agarrarse a pared mientras cae y la está tocando (L/R)
+ - Animación salto desde la pared (L/R)
+
+Ataques:
+ - Ataque básico con espada (L/R)
+ - Dash
+    - Bajar en angulo de 45º en salto (L/R)
+    - Horizontal (L/R)
+    - Caer en vertical [90º] con fuerza (L/R)
+ - Girar sobre si mismo [estilo Garen LoL] (L/R)
+ - Ataque básico mas fuerte [espada de abajo arriba] (L/R)

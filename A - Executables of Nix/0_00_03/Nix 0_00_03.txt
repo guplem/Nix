@@ -1,0 +1,35 @@
+• Fixed bugs & Issues
+ - #7 Enemies stops when collides with an instance that is walking in the opposite direction: Now this bug is solved.
+ - #6 Slow Performance: Now the game runs approximately the double of the FPS that in 0.00.02-pre-alpha.
+ - #5 Bug in jump and fall animations: Now the animations are arranged.
+ - #4 Wrong animation when the player climb steps: now the player when is climbing the steps activates the walk/run animation.
+ - #1 Bug with the animation in the collision with the walls: Now if the player collides with a wall the stand animation is activated.
+ - You can jump like if you were in wall when you are climbing steps: Now, this bug is solved.
+ - Sometimees The player moves slowly when the acceleration is not an integer number: Now this bug is solved.
+
+• Added view of FPS that is updated every 0.25 seconds
+• Now the player can increase the room speed (default room speed = 120).
+• Now the player can decreas the room speed below 20 (to 5) if keep pressed the down arrow when the room speed is 20.
+• Now if you want to grip the edge of an obstacle you must hold the shift key.
+• Added new animation to grip obstacle that now is calibrated with the height of the player and the obstacle.
+• The enemies now stops walking at random distances when are  near the player.
+• Now the basic attack only works in the direction of the view of the player.
+• Now the instance appears depending of the distance of the player. This make a better performance.
+• Now the vertical dash hurts the enemies.
+• Added the "horizontal" dashes (going up, in completly horizontality and going down). They hurts the enemies.
+• Added sytem to equilibrate the damage from the player to the enemies.
+• All the code for the animations has been written again fixing bugs, doing it more efficient and manageable.
+• Part of the code that controls the damage to the enemy when he is attacked by the player has been writing again to eliminate errors and redundancies.
+• Added new animation when the player uses his basic attack.
+• Added indicator at the right bottom od the screen to indicate the active enemies in the current moment.
+
+
+
+// - Por añadir aún - //
+• Damage from enemies
+• Add distance auto rise
+• Add cooldown habilities
+• Interface
+ - Vida
+ - Points
+ - Enfiamiento habilidades

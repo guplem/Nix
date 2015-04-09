@@ -24,15 +24,27 @@ player/*HABILITY*/dmg = (
     + (global.playerTrueAP*global.playerTrueAP/*HABILITY*/) 
 );
 
-if (notRandom_nearPlayer = 1) && (player/*HABILITY*/ = 1)
-{
+
+if (notRandom_nearPlayer = 1) && (player/*HABILITY*/ = 1){
+    /*HABILITY*/Hit = 1;
+}
+
+
+if (/*HABILITY*/Hit = 1){
+        // Movment
+    hsp += (sign(x-obj_player.x) * movDmgFromPLayer);
+    vsp -= (movDmgFromPLayer/8)
+
     //Calculate critic
-    if (irandom(100) < (global.playerCritickProbability*global.playerCritickProbability/*HABILITY*/) )
-    { 
+    if (irandom(100) < (global.playerCritickProbability*global.playerCritickProbability/*HABILITY*/) ) { 
         criticDamage = (global.playerCritickDamage*global.playerCritickDamage/*HABILITY*/);
     } else { criticDamage = 1; }
     
-    ehp -= (player/*HABILITY*/dmg * criticDamage);
+        //Dmg
+    ehp -= (/*HABILITY*/dmg * criticDamage);
+        
+        //Disable Dmg
+    /*HABILITY*/Hit = 0;
 }
 
 

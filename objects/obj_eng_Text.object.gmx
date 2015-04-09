@@ -8,7 +8,7 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="8" enumb="0">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,11 +25,47 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>alpha = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>x= (display_get_gui_width()/2);
+y= 100*gui_scale;
+
+if (obj_player.x &gt; 500) || (view_xview[0] &gt; 0) {
+    if alpha &gt; 0 {
+        alpha -= 1/30;
+    }
+} else {
+    if alpha &lt; 1 {
+        alpha += 1/30;
+    } 
+}
+
+draw_set_alpha(1);
 draw_set_color(c_black);
-draw_set_font(fnt_default);
+draw_set_font(fnt_default12);
 draw_set_halign(fa_center);
-draw_text(x+1,y+1,"ENGLISH # THIS IS A TEST VERSION OF THE GAME. # IT CONTAINS A LOT OF BUGS AND ONLY SOME OF THE BASICS MOVEMENTS OF THE PLAYER. # PLEASE, IF YOU FIND ANY BUG, LET US KNOW IT IN: # TRIUNITYSTUDIOS.COM / NIXBUGS");
+draw_text_colour(x,y,"ENGLISH #THIS IS A TEST VERSION OF THE GAME. #IT CONTAINS A LOT OF BUGS AND ONLY CONTAINS A LITLE PART OF THE FINAL GAME. #PLEASE, IF YOU FIND ANY BUG, LET US KNOW IT IN: #TRIUNITYSTUDIOS.COM / NIXBUGS", c_black, c_black, c_black, c_black, alpha);
 
 </string>
           </argument>

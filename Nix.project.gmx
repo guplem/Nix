@@ -7,7 +7,7 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="spr_player">
-      <sprite>sprites\spr_player_mask</sprite>
+      <sprite>sprites\mask_player</sprite>
       <sprite>sprites\spr_player_standR</sprite>
       <sprite>sprites\spr_player_standL</sprite>
       <sprite>sprites\spr_player_walkR</sprite>
@@ -22,14 +22,8 @@
       <sprite>sprites\spr_player_ContactFlorHardL</sprite>
       <sprite>sprites\spr_player_WakeUpAfterContactFlorHardR</sprite>
       <sprite>sprites\spr_player_WakeUpAfterContactFlorHardL</sprite>
-      <sprite>sprites\spr_player_TreparBorde0R</sprite>
-      <sprite>sprites\spr_player_TreparBorde1R</sprite>
-      <sprite>sprites\spr_player_TreparBorde2R</sprite>
-      <sprite>sprites\spr_player_TreparBorde3R</sprite>
-      <sprite>sprites\spr_player_TreparBorde0L</sprite>
-      <sprite>sprites\spr_player_TreparBorde1L</sprite>
-      <sprite>sprites\spr_player_TreparBorde2L</sprite>
-      <sprite>sprites\spr_player_TreparBorde3L</sprite>
+      <sprite>sprites\spr_player_TreparBordeR</sprite>
+      <sprite>sprites\spr_player_TreparBordeL</sprite>
       <sprite>sprites\spr_player_goDownInWallR</sprite>
       <sprite>sprites\spr_player_goDownInWallL</sprite>
       <sprite>sprites\spr_player_jumpingFromWallR</sprite>
@@ -43,33 +37,65 @@
       <sprite>sprites\spr_player_basicAtackR</sprite>
       <sprite>sprites\spr_player_basicAtackL</sprite>
     </sprites>
-    <sprite>sprites\spr_general_mask</sprite>
+    <sprites name="enemy">
+      <sprite>sprites\spr_e_soldierR</sprite>
+      <sprite>sprites\spr_e_soldierL</sprite>
+      <sprite>sprites\spr_en_basatckR</sprite>
+      <sprite>sprites\spr_en_basatckL</sprite>
+      <sprite>sprites\spr_eBas_walkR</sprite>
+      <sprite>sprites\spr_eBas_walkL</sprite>
+    </sprites>
     <sprite>sprites\spr_solid_mask</sprite>
     <sprite>sprites\spr_solid_mask_black</sprite>
-    <sprite>sprites\spr_e_soldierR</sprite>
-    <sprite>sprites\spr_e_soldierL</sprite>
+    <sprite>sprites\spr_general_mask</sprite>
+    <sprites name="HUD">
+      <sprite>sprites\spr_CDverDash</sprite>
+      <sprite>sprites\spr_CDhorDash</sprite>
+      <sprite>sprites\spr_CDbasAtack</sprite>
+      <sprite>sprites\spr_CDspin</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <fonts name="fonts">
-    <font>fonts\fnt_default</font>
+    <font>fonts\fnt_default6</font>
+    <font>fonts\fnt_default9</font>
+    <font>fonts\fnt_default12</font>
+    <font>fonts\fnt_default50</font>
   </fonts>
   <objects name="objects">
-    <objects name="Text">
-      <object>objects\obj_version_Text</object>
+    <objects name="obj_text">
+      <object>objects\obj_infoSettings</object>
+      <object>objects\obj_CD_Text</object>
+      <object>objects\obj_heal</object>
+      <object>objects\obj_stamina</object>
       <object>objects\obj_esp_Text</object>
       <object>objects\obj_eng_Text</object>
       <object>objects\obj_controlsMov_Text</object>
-      <object>objects\obj_controlsVel_text</object>
-      <object>objects\obj_velIndicator_text</object>
       <object>objects\obj_unitsCounter</object>
+      <object>objects\obj_gameEnd</object>
+      <object>objects\obj_versionIndicator_text</object>
+    </objects>
+    <objects name="obj_rooms">
+      <object>objects\obj_general</object>
+      <object>objects\obj_pauseGame</object>
+      <object>objects\obj_onLvl</object>
+      <object>objects\obj_roomStartGame</object>
+      <object>objects\obj_roomMenu</object>
+      <object>objects\obj_roomGraphicSettings</object>
     </objects>
     <object>objects\obj_player</object>
     <object>objects\obj_solid</object>
     <object>objects\obj_enemy_standard</object>
     <object>objects\spawn_obj_enemy_standard</object>
+    <object>objects\obj_dmgToEn</object>
+    <object>objects\obj_dmgCrToEn</object>
+    <object>objects\obj_redScreenDmgPlayer</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\room_startGame</room>
+    <room>rooms\room_menu</room>
+    <room>rooms\room_GraphicSettings</room>
     <room>rooms\room1</room>
   </rooms>
   <help>

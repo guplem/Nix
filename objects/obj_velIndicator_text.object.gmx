@@ -30,13 +30,15 @@ globalvar FPS; FPS = 0; // Current FPS
 timeReloadFPS = 0; // timing to reload the var "FPS"
 
 //Variables
-maxTimeReloadFPS = 0.25; // Seconds to reload the "FPS" indicator and variable
+maxTimeReloadFPS = 0.15; // Seconds to reload the "FPS" indicator and variable
+
+
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -53,18 +55,14 @@ maxTimeReloadFPS = 0.25; // Seconds to reload the "FPS" indicator and variable
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x= view_xview[0] + 5;
-y= view_yview[0] + 5;
-
+            <string>x= view_xview[view_current] + (view_wview[0]-3)*gui_scale;
+y= view_yview[view_current] + 1*gui_scale;
 
 draw_set_alpha(0.7);
 draw_set_color(c_gray);
 draw_set_font(fnt_default);
-draw_set_halign(fa_left);
-draw_text(x,y,"Room vel: " + string(room_speed) + "#FPS = " + string(round(global.FPS)));
-
-
-
+draw_set_halign(fa_right);
+draw_text(x,y+16,"Room vel: " + string(room_speed) + "#FPS = " + string(round(global.FPS)) );
 draw_set_alpha(1);
 </string>
           </argument>
@@ -132,6 +130,27 @@ if (down_time) &amp;&amp; (room_speed &gt;= 20)
 if (room_speed &gt; 250) &amp;&amp; (!down_time_constant) { room_speed = 250; }
 if (room_speed &lt; 20) &amp;&amp; (!down_time_constant) { room_speed = 20; }
 if (room_speed &lt; 20) &amp;&amp; (down_time_constant) { room_speed = 5; }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if keyboard_check_pressed(vk_escape) { room_goto(room_menu); }
 </string>
           </argument>
         </arguments>

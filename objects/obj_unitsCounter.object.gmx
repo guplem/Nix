@@ -8,7 +8,7 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,16 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x= view_xview[0] + (305);
-y= view_yview[0] + (room_height-10);
+            <string>x= view_xview[view_current] + (view_wview[0]-2)*gui_scale;
+y= view_yview[view_current] + (room_height-22)*gui_scale;
+
+
 
 draw_set_alpha(0.5);
 draw_set_color(c_gray);
-draw_set_font(fnt_default);
-draw_set_halign(fa_left);
-draw_text(x,y,"Active enemies: " + string(global.activeEnemies) );
-
-
+draw_set_font(fnt_default12);
+draw_set_halign(fa_right);
+draw_text(x,y,"Spawners: " + string(instance_number(spawn_obj_enemy_standard)) + "#Active enemies: " + string(instance_number(obj_enemy_standard)) );
 
 draw_set_alpha(1);
 </string>

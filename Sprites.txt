@@ -1,0 +1,17 @@
+Stand: 2
+Walk: 4
+Sprint: 6
+Jump: 7
+ContactFlorSoft: 6
+ContactFlorHard: 6
+WakeUpAfterContactFlorHard: 5
+TreparBorde0: 1
+TreparBorde1: 1
+TreparBorde2: 1
+TreparBorde3: 1
+doDownInWall:6
+JumpingFromWall: 9
+dashVertical: 7
+dashHorizontal: 3
+dash45: 4
+basicAtack: 6

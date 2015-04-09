@@ -25,12 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
-draw_set_color(c_black);
-draw_set_font(fnt_default);
-draw_set_halign(fa_left);
-draw_text((x),(room_height-60),"INCREASE VELOCITY: ARROW UP#DECREASE VELOCITY: ARROW DOWN");
+            <string>x= 0;
+y= 280;
 
+draw_set_alpha(0.8);
+draw_set_color(c_black);
+draw_set_font(fnt_default6);
+draw_set_halign(fa_left);
+draw_text(x+1,y+1,"INCREASE VELOCITY: ARROW UP#DECREASE VELOCITY: ARROW DOWN");
+
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

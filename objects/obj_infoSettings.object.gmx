@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1215752191</depth>
+  <depth>-99</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -64,82 +64,110 @@ if (global.showInfoSett = 0) {
     instance_destroy() ;
 }
 
-// FPS and room vel
+//Configuration
 draw_set_alpha(0.7);
 draw_set_color(c_gray);
 draw_set_font(fnt_default12);
 draw_set_halign(fa_right);
+draw_set_valign(fa_top)
+
+// GameVersion
+draw_set_color(c_white)
 draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-    y+ ((view_yview[view_current]+15)*gui_scale),
-    "Room vel: " + string(room_speed) + "#FPS = " + string(round(global.FPS)) 
+    x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+    y+ ((view_yview[view_current] + 1)*hgui_scale),
+    string(gameVersion)
 );
-draw_set_alpha(1);
+draw_set_color(c_gray)
+
+// FPS and room vel
+draw_text(
+    x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+    y+ ((view_yview[view_current] + 16)*hgui_scale),
+    "Room vel: " + string(room_speed) 
+    + "#FPS = " + string(round(global.FPS))
+);
 
 // Window resolution and Fullscreen
-draw_set_alpha(0.7);
-draw_set_color(c_gray);
-draw_set_font(fnt_default12);
-draw_set_halign(fa_right);
 draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-    y+ ((view_yview[view_current] + 75)*gui_scale),
+    x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+    y+ ((view_yview[view_current] + 25)*hgui_scale),
     "#Window resolution = " + string(window_get_width()) +  " x " + string(window_get_height())
-);
+    );
+
 if window_get_fullscreen() {
     draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-        y+ ((view_yview[view_current] + 70)*gui_scale), 
+        x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+        y+ ((view_yview[view_current] + 45)*hgui_scale), 
         "Fullscreen is ON");
 } else {
     draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-        y+ ((view_yview[view_current] + 70)*gui_scale), 
+        x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+        y+ ((view_yview[view_current] + 45)*hgui_scale), 
         "Fullscreen is OFF");
 }
-draw_set_alpha(1);
+
+// Coordenates view
+draw_text(
+    x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+    y+ ((view_yview[view_current]+55)*hgui_scale),
+    "View position: (" + string(view_xview) + ", " + string(-view_yview) + ")"
+);
+
 
 // Objects on screen
-draw_set_alpha(0.7);
-draw_set_color(c_gray);
-draw_set_font(fnt_default12);
-draw_set_halign(fa_right);
 draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-    y+ ((view_yview[view_current] + 76)*gui_scale),
+    x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+    y+ ((view_yview[view_current] + 75)*hgui_scale),
     "Total instances: " + string(instance_count)
 );
 
-// Coordenates view and info player
-draw_set_alpha(0.7);
-draw_set_color(c_gray);
-draw_set_font(fnt_default12);
-draw_set_halign(fa_right);
-draw_text(
-    x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-    y+ ((view_yview[view_current]+25)*gui_scale),
-    "#View position: (" + string(view_xview) + ", " + string(-view_yview) + ")"
-);
+
+
+//Info player
 if instance_exists(obj_player) { 
     draw_text(
-        x+ (view_xview[view_current] + (view_wview[0]-3)*gui_scale),
-        y+ ((view_yview[view_current]+35)*gui_scale),
-        "#Player position: (" + string(obj_player.x) + ", " + string(-obj_player.y) + ")# Player movDir: " + string(player_movDir) + "# Player viewDir: " + string(player_viewDir)
+        x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+        y+ ((view_yview[view_current]+95)*hgui_scale),
+        "Player position: (" + string(obj_player.x) + ", " + string(-obj_player.y) + ")
+        Player movDir: " + string(player_movDir) + "
+        Player viewDir: " + string(player_viewDir)
     );
 }
 
-draw_set_alpha(1);
+// Angle Player and cursor
+if instance_exists(obj_cursor) &amp;&amp; instance_exists(obj_player) {
+    draw_text(     
+        x+ (view_xview[view_current] + (view_wview[0]-2)*wgui_scale),
+        y+ ((view_yview[view_current] + 135)*hgui_scale),
+        "Mouse x: " + string(mouse_x-view_xview) + "  y: " + string(mouse_y) + "
+        Mouse angle with player: " + string(global.angleWcursor)
+    );    
+}
 
-
-// Controls velocity
-draw_set_alpha(0.7);
-draw_set_color(c_gray);
-draw_set_font(fnt_default12);
-draw_set_halign(fa_right);
+// Controls velocity and profile info
+if global.saveNum != 0 {
 draw_text(
-    x+ (view_xview[view_current] + window_get_width() - 15),
-    y+ (view_yview[view_current] + window_get_height() - 150),
-    "INCREASE VELOCITY: ARROW UP#DECREASE VELOCITY: ARROW DOWN");
+    x+ (view_xview[view_current] + window_get_width() - 10),
+    y+ (view_yview[view_current] + window_get_height() - 190),
+    "INCREASE VELOCITY: F8
+    DECREASE VELOCITY: F7
+    #SAVENUM: " + string(saveNum) + "
+    NameProfile: " + string(NameProfile) + "
+    configStatsBar: " + string(configStatsBar) + "
+    configStatsInfo: " + string(configStatsInfo) + "
+    configCDbar: " + string(configCDbar)
+);
+} else {
+draw_text(
+    x+ (view_xview[view_current] + window_get_width() - 10),
+    y+ (view_yview[view_current] + window_get_height() - 190),
+    "INCREASE VELOCITY: F8
+    DECREASE VELOCITY: F7"
+);
+}
+
+draw_set_valign(fa_bottom);
 draw_set_alpha(1);
 </string>
           </argument>
@@ -161,7 +189,7 @@ draw_set_alpha(1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///FPS
+            <string>///FPS control
 timeReloadFPS += 1/room_speed; //THIS ONE IS "1/room_speed", not "1/120"
 
 if (timeReloadFPS &gt;= maxTimeReloadFPS)
@@ -189,10 +217,10 @@ if (timeReloadFPS &gt;= maxTimeReloadFPS)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Room Speed
-up_time = keyboard_check_pressed(vk_up);
-down_time = keyboard_check_pressed(vk_down);
-down_time_constant = keyboard_check(vk_down);
+            <string>///Room Speed control
+up_time = keyboard_check_pressed(vk_f8);
+down_time = keyboard_check_pressed(vk_f7);
+down_time_constant = keyboard_check(vk_f7);
 
 if (up_time)
 {
@@ -207,28 +235,6 @@ if (down_time) &amp;&amp; (room_speed &gt;= 20)
 if (room_speed &gt; 250) &amp;&amp; (!down_time_constant) { room_speed = 250; }
 if (room_speed &lt; 20) &amp;&amp; (!down_time_constant) { room_speed = 20; }
 if (room_speed &lt; 20) &amp;&amp; (down_time_constant) { room_speed = 5; }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Return to menu
-if keyboard_check_pressed(vk_escape) { room_goto(room_menu); }
 </string>
           </argument>
         </arguments>
@@ -251,14 +257,14 @@ if keyboard_check_pressed(vk_escape) { room_goto(room_menu); }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Resolutions
+            <string>/// Game Resolution
 draw_set_alpha(0.7);
 draw_set_color(c_gray);
 draw_set_font(fnt_default6);
 draw_set_halign(fa_left);
 draw_text(
     x+ (view_xview[view_current] + 3),
-    y+ (view_yview[view_current] + 15),
+    y+ (view_yview[view_current] + 40),
     "Game resolution: " + string(view_wview[view_current]) + " x " + string(view_hview[view_current])
 );
 </string>

@@ -55,10 +55,13 @@ regenHPacc = 0; // HP regeneration per second
 regenSTacc = 0; // HP regeneration per second
 globalvar playerStuned; playerStuned = 0; //If the player is stuned or not
 wasteStaminaBasAtt = 0; // Waste the estamina to do the hability basic attack
+wasteStaminaSpin = 0; // Waste the estamina to do the hability Spin
 wasteStaminaVDash = 0;// Waste the estamina to do the hability vertical dash
 wasteStaminaHDash = 0;// Waste the estamina to do the hability horizontal dash
 globalvar Player_ImageIndex; Player_ImageIndex = image_index;
 globalvar Player_SpriteIndex; Player_SpriteIndex = sprite_index;
+timeSpin = 0;
+aniSpin = 0;
 
     //Sprites
     spriteLoop = 0; //If the sprite have restarts after ends (1) or not (0)
@@ -95,9 +98,12 @@ globalvar Player_SpriteIndex; Player_SpriteIndex = sprite_index;
     cont_spr_player45_dash = 0;
     spr_animationBasicAttack = 0;
     cont_spr_animationBasicAttack = 0;
+    spr_animationSpin = 0;
+    cont_spr_animationSpin = 0;
     globalvar timing_spr_animationBasicAttack; timing_spr_animationBasicAttack = 0; // Timer to controll the time that the player still with the basic attack animation after end it
     spr_TreparBorde = 0;
     cont_spr_TreparBorde = 0;
+    globalvar timing_spr_animationSpin; timing_spr_animationSpin = 0;
 
 // Variables
 grav = 0.1; // Gravity
@@ -115,89 +121,171 @@ maxTimesJumpingInWall = 3; // Max times that the player can jump in the wall
 timeHorDash = 0.3; // Seconds doing the horizontal dash
 horDashExtraVel = 2; // Extra velocity of the hor dash
 timeMax_spr_animationBasicAttack = 0.15; // (seconds) Time that the player still with the basic attack animation after end it
+timeMax_spr_animationSpin = 0; // (seconds) Time that the player still with the spin animation after end it
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Combat system
 
-
-// Combat system
 globalvar playerHeal; playerHeal = 10;
-globalvar playerMaxHeal; playerMaxHeal = 50;
 globalvar playerNoBattle; playerNoBattle = 5; // Second that considerates the player is not in battle
-globalvar regenHPs; regenHPs = 1; // Max HP regenerated every second
 globalvar accelerationRegenHP; accelerationRegenHP = 0.0005; // Acceleration of the regeneration of HP/s
 
 globalvar playerStamina; playerStamina = 0;
-globalvar playerMaxStamina; playerMaxStamina = 100;
 globalvar regenSTs; regenSTs = 30; // Max ST regenerated every second
 globalvar accelerationRegenST; accelerationRegenST = 0.0005; // Acceleration of the regeneration of ST/s
 
-globalvar playerAD; playerAD = 1;
-globalvar playerPenArm; playerPenArm = 1;
-globalvar playerTrueAD; playerTrueAD = 1;
-globalvar playerAP; playerAP = 1;
-globalvar playerPenAP; playerPenAP = 1; 
-globalvar playerTrueAP; playerTrueAP = 1;
-globalvar playerCritickProbability; playerCritickProbability = 30; // In % [percentage]
-globalvar playerCritickDamage; playerCritickDamage = 10;
-
-globalvar playerLifeSteal; playerLifeSteal = 1;
-globalvar playerSuccHech; playerSuccHech = 1;
-
-globalvar playerArmour; playerArmour = 1;
-globalvar playerResAP; playerResAP = 1;
-
-globalvar playerAttackSpeed; playerAttackSpeed = 1;
-globalvar playerReducCC; playerReducCC = 1;
-globalvar playerReducCooldown; playerReducCooldown = 1;
-
-globalvar resKnockback; resKnockback = 1; //Division of the knockback
-
+globalvar playerEXPnextLvL; playerEXPnextLvL = 10; //exp that needs to pass the first lvl
+globalvar playerEXPaddNewLvL; playerEXPaddNewLvL = 20; //New exp that needs every lvl
+globalvar animationNextLvL; animationNextLvL = 0;
 
     // Basic attack 
 globalvar playerBasicAttack; playerBasicAttack = 0;
-globalvar BasicAttackCD; BasicAttackCD = 1; // CD in seconds
-globalvar playerBasicAttackCD; playerBasicAttackCD = 0; // Reaming CD for Horizontal Dash (seconds) [don't change]
-globalvar staminaBasicAttack; staminaBasicAttack = 10; // Stamina that uses the basic attack
+globalvar playerBasicAttackCD; playerBasicAttackCD = 0; // Reaming CD for hab (seconds) [don't change]
 
-globalvar playerADBasicAttack; playerADBasicAttack = 1;
-globalvar playerPenArmBasicAttack; playerPenArmBasicAttack = 1;
-globalvar playerTrueADBasicAttack; playerTrueADBasicAttack = 1;
-globalvar playerAPBasicAttack; playerAPBasicAttack = 1;
-globalvar playerPenAPBasicAttack; playerPenAPBasicAttack = 1; 
-globalvar playerTrueAPBasicAttack; playerTrueAPBasicAttack = 1;
-globalvar playerCritickProbabilityBasicAttack; playerCritickProbabilityBasicAttack = 1; // In % [percentage]
-globalvar playerCritickDamageBasicAttack; playerCritickDamageBasicAttack = 1;
-
+    // Spin
+globalvar playerSpin; playerSpin = 0;
+globalvar playerSpinCD; playerSpinCD = 0; // Reaming CD for hab (seconds) [don't change]
+globalvar LongSpin; LongSpin = 1.5; // (seconds) Duration of the spin
+globalvar everSpinHitTime; everSpinHitTime = 0.2; //(seconds) Ever when the player hits the enemy doing the spin
 
     // Vertical Dash (multiplicate the standard for...)
 globalvar playerCollisionVDash; playerCollisionVDash = 0; // If the player collides with the flor doing the vertical dash
 playerVDashON = 0; // If the player is doing the vertical dash (for animations)
-globalvar VerticalDashCD; VerticalDashCD = 2; // CD in seconds
-globalvar playerVertical_dashCD; playerVertical_dashCD = 0; // Reaming CD for Horizontal Dash (seconds) [don't change]
-globalvar staminaVDash; staminaVDash = 15; // Stamina that uses the Vertical Dash
-
-globalvar playerADVDash; playerADVDash = 1;
-globalvar playerPenArmVDash; playerPenArmVDash = 1;
-globalvar playerTrueADVDash; playerTrueADVDash = 1;
-globalvar playerAPVDash; playerAPVDash = 1;
-globalvar playerPenAPVDash; playerPenAPVDash = 1; 
-globalvar playerTrueAPVDash; playerTrueAPVDash = 1;
-globalvar playerCritickProbabilityVDash; playerCritickProbabilityVDash = 1; // In % [percentage]
-globalvar playerCritickDamageVDash; playerCritickDamageVDash = 1;
+globalvar vspVerticalDash; vspVerticalDash = 0.1; //Increases 120 times/s that vertical velocity
+globalvar playerVertical_dashCD; playerVertical_dashCD = 0; // Reaming CD for V Dash (seconds) [don't change]
 
     // Horizontal Dash (-45, 0, +45)
 globalvar playerHorizontal_dash; playerHorizontal_dash = 0;
-globalvar HorizontalDashCD; HorizontalDashCD = 3; // CD in seconds
 globalvar playerHorizontal_dashCD; playerHorizontal_dashCD = 0; // Reaming CD for Horizontal Dash (seconds) [don't change]
-globalvar staminaHDash; staminaHDash = 20; // Stamina that uses the Horizontal Dash
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Upgrades
+globalvar upgradePlayerMaxHeal; upgradePlayerMaxHeal = 1;
+globalvar upgradeRegenHPs; upgradeRegenHPs = 1;
+globalvar upgradeAccelerationRegenHP; upgradeAccelerationRegenHP = 1;
 
-globalvar playerADHDash; playerADHDash = 1;
-globalvar playerPenArmHDash; playerPenArmHDash = 1;
-globalvar playerTrueADHDash; playerTrueADHDash = 1;
-globalvar playerAPHDash; playerAPHDash = 1;
-globalvar playerPenAPHDash; playerPenAPHDash = 1; 
-globalvar playerTrueAPHDash; playerTrueAPHDash = 1;
-globalvar playerCritickProbabilityHDash; playerCritickProbabilityHDash = 1; // In % [percentage]
-globalvar playerCritickDamageHDash; playerCritickDamageHDash = 1;
+globalvar upgradePlayerMaxStamina; upgradePlayerMaxStamina = 1;
+globalvar upgradeRegenSTs; upgradeRegenSTs = 1;
+globalvar upgradeAccelerationRegenST; upgradeAccelerationRegenST = 1;
 
+globalvar upgradePlayerAD; upgradePlayerAD = 1;
+globalvar upgradePlayerPenArm; upgradePlayerPenArm = 1;
+globalvar upgradePlayerTrueAD; upgradePlayerTrueAD = 1;
+globalvar upgradePlayerAP; upgradePlayerAP = 1;
+globalvar upgradePlayerPenAP; upgradePlayerPenAP = 1; 
+globalvar upgradePlayerTrueAP; upgradePlayerTrueAP = 1;
+globalvar upgradePlayerCritickProbability; upgradePlayerCritickProbability = 1;
+globalvar upgradePlayerCritickDamage; upgradePlayerCritickDamage = 1;
+
+globalvar upgradePlayerArmour; upgradePlayerArmour = 1;
+globalvar upgradePlayerResAP; upgradePlayerResAP = 1;
+
+globalvar upgradeResKnockback; upgradeResKnockback = 1;
+
+globalvar upgradeSTbAttack; upgradeSTbAttack = 1;
+globalvar upgradeCDbAttack; upgradeCDbAttack = 0.2;
+
+globalvar upgradeSTspin; upgradeSTspin = 1;
+globalvar upgradeCDspin; upgradeCDspin = 0.2;
+
+globalvar upgradeSTvDash; upgradeSTvDash = 1;
+globalvar upgradeCDvDash; upgradeCDvDash = 0.2;
+
+globalvar upgradeSThDash; upgradeSThDash = 1;
+globalvar upgradeCDhDash; upgradeCDhDash = 0.2;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Particles
+ps = part_system_create();
+
+    //Variables
+    timeParSprint = 0;
+    parSprrint = 1;
+    
+    // dustWalk
+        dustWalkR = part_type_create();
+            part_type_shape(dustWalkR,pt_shape_disk);
+            part_type_size(dustWalkR,0.01,0.02,0,0);
+            part_type_colour1(dustWalkR,c_gray);
+            part_type_speed(dustWalkR,2,5,-1,0);
+            part_type_direction(dustWalkR,0,20,10,10);
+            part_type_gravity(dustWalkR,.05,10);
+            part_type_life(dustWalkR,10,40);
+            part_system_depth(dustWalkR,(depth-1));
+            
+        dustWalkL = part_type_create();
+            part_type_shape(dustWalkL,pt_shape_disk);
+            part_type_size(dustWalkL,0.01,0.02,0,0);
+            part_type_colour1(dustWalkL,c_gray);
+            part_type_speed(dustWalkL,2,5,-1,0);
+            part_type_direction(dustWalkL,0,20,10,10);
+            part_type_gravity(dustWalkL,.05,170);
+            part_type_life(dustWalkL,10,40);
+            part_system_depth(dustWalkL,(depth-1));            
+            
+        test1 = part_type_create();
+            part_type_shape(test1,pt_shape_disk);
+            part_type_size(test1,0.01,0.02,0,0);
+            part_type_colour1(test1,c_red);
+            part_type_speed(test1,2,5,-1,0);
+            part_type_direction(test1,0,0,0,0);
+            part_type_gravity(test1,.05,45);
+            part_type_life(test1,200,3000);
+            part_system_depth(test1,(depth-1));            
 </string>
           </argument>
         </arguments>
@@ -395,7 +483,7 @@ Player_SpriteIndex = sprite_index;
 if (spriteLoop = 0) &amp;&amp; (image_index &gt;= image_number - 1) { image_index = image_number -1; image_speed = 0; }
 
     //Stand
-if (abs(player_hsp) &lt;= 0.1) &amp;&amp; (player_vsp = 0) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (!place_free(x,y+1)) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (abs(player_hsp) &lt;= 0.1) &amp;&amp; (player_vsp = 0) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (!place_free(x,y+1)) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_standR; }
     if (player_viewDir = -1) { sprite_index = spr_player_standL; }   
@@ -408,7 +496,7 @@ if (abs(player_hsp) &lt;= 0.1) &amp;&amp; (player_vsp = 0) &amp;&amp; (cont_vDas
 
 
     //Walk
-if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 0) &amp;&amp; (player_vsp = 0) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (collision_line(x, y, x, y+(check_rise+1), obj_solid, true, true)) &amp;&amp;  (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 0) &amp;&amp; (player_vsp = 0) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (collision_line(x, y, x, y+(check_rise+1), obj_solid, true, true)) &amp;&amp;  (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 { if (abs(player_vsp) &lt; 1) || (autoRise = 1) {
     if (player_viewDir = 1) { sprite_index = spr_player_walkR; }
     if (player_viewDir = -1) { sprite_index = spr_player_walkL; }   
@@ -422,7 +510,7 @@ if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 0) &amp;&amp; (player_vs
 
 
     //Sprint
-if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 1) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (collision_line(x, y, x, y+(check_rise+1), obj_solid, true, true)) &amp;&amp;  (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 1) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (collision_line(x, y, x, y+(check_rise+1), obj_solid, true, true)) &amp;&amp;  (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 { if (abs(player_vsp) &lt; 1) || (autoRise = 1) {
     if (player_viewDir = 1) { sprite_index = spr_player_sprintR; }
     if (player_viewDir = -1) { sprite_index = spr_player_sprintL; }   
@@ -438,7 +526,7 @@ if (abs(player_hsp) &gt; 0.11) &amp;&amp; (key_sprint = 1) &amp;&amp; (cont_vDas
     
 
     // Jump
-if (player_vsp &lt; 0 ) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (autoRise = 0) &amp;&amp; (climbBlock = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (player_vsp &lt; 0 ) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_contactHard &lt;= 0.0) &amp;&amp; (autoRise = 0) &amp;&amp; (climbBlock = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_jumpR; }
     if (player_viewDir = -1) { sprite_index = spr_player_jumpL; }   
@@ -454,7 +542,7 @@ if (player_vsp &lt; 0 ) &amp;&amp; (cont_vDash &lt;= 0.0) &amp;&amp; (cont_conta
  
     // Contact
         /// Soft
-if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + player_vsp *2), obj_solid, true, true)) &amp;&amp; (((check_rise+1)/10) &lt; player_vsp) &amp;&amp; (player_vsp &lt; (maxFallVel/3)) &amp;&amp; (autoRise = 0) &amp;&amp; (place_free(x,y+((sprite_get_height(spr_player_standR))/1.5))) &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + player_vsp *2), obj_solid, true, true)) &amp;&amp; (((check_rise+1)/10) &lt; player_vsp) &amp;&amp; (player_vsp &lt; (maxFallVel/3)) &amp;&amp; (autoRise = 0) &amp;&amp; (place_free(x,y+((sprite_get_height(spr_player_standR))/1.5))) &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_ContactFlorSoftR; }
     if (player_viewDir = -1) { sprite_index = spr_player_ContactFlorSoftL; } 
@@ -469,7 +557,7 @@ if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + pla
 
 
         /// Hard
-if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + player_vsp *2), obj_solid, true, true)) &amp;&amp; (0 &lt; player_vsp) &amp;&amp; (player_vsp &gt; (maxFallVel/1.7)) &amp;&amp; (autoRise = 0)  &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + player_vsp *2), obj_solid, true, true)) &amp;&amp; (0 &lt; player_vsp) &amp;&amp; (player_vsp &gt; (maxFallVel/1.7)) &amp;&amp; (autoRise = 0)  &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_ContactFlorHardR; }
     if (player_viewDir = -1) { sprite_index = spr_player_ContactFlorHardL; }   
@@ -485,7 +573,7 @@ if (collision_line(x, y, x, y +((2*(sprite_get_height(spr_player_standR))) + pla
 
 
           /// Wall
-if (nextToWallSliding = 1) &amp;&amp; (!place_free(x+(player_hsp*3), y)) &amp;&amp; (place_free(x,y+1)) &amp;&amp; (player_vsp != 0) &amp;&amp; (autoRise = 0) &amp;&amp; (climbBlock = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (nextToWallSliding = 1) &amp;&amp; (!place_free(x+(player_hsp*3), y)) &amp;&amp; (place_free(x,y+1)) &amp;&amp; (player_vsp != 0) &amp;&amp; (autoRise = 0) &amp;&amp; (climbBlock = 0) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_goDownInWallR; }
     if (player_viewDir = -1) { sprite_index = spr_player_goDownInWallL; }   
@@ -498,7 +586,7 @@ if (nextToWallSliding = 1) &amp;&amp; (!place_free(x+(player_hsp*3), y)) &amp;&a
     cont_spr_goDownInWall = 0; 
 }
         ///Jumping in wall
-if (jumpInWallR = 1)
+if (jumpInWallR = 1) &amp;&amp; (spr_animationSpin = 0)
 {
     sprite_index = spr_player_jumpingFromWallR;
     if (cont_spr_jumpingFromWallR = 0) { image_index = 0; cont_spr_jumpingFromWallR = 1; }
@@ -510,7 +598,7 @@ if (jumpInWallR = 1)
     cont_spr_jumpingFromWallR = 0; 
 }
 
-if (jumpInWallL = 1)
+if (jumpInWallL = 1) &amp;&amp; (spr_animationSpin = 0)
 {
     sprite_index = spr_player_jumpingFromWallL;
     if (cont_spr_jumpingFromWallL = 0) { image_index = 0; cont_spr_jumpingFromWallL = 1; }
@@ -525,7 +613,7 @@ if (jumpInWallL = 1)
 
 // Dash
     /// Vertical dash
-    if (Check_collisionVDash = 1) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (player_vsp &gt; 0) || (cont_vDash &gt; 0.0)  &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) {
+    if (Check_collisionVDash = 1) &amp;&amp; (spr_animationBasicAttack = 0) &amp;&amp; (player_vsp &gt; 0) || (cont_vDash &gt; 0.0)  &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)  &amp;&amp; (spr_animationSpin = 0){
 
         if (player_viewDir = 1) { sprite_index = spr_player_dashVerticalR; }
         if (player_viewDir = -1) { sprite_index = spr_player_dashVerticalL; }   
@@ -539,7 +627,7 @@ if (jumpInWallL = 1)
     }
     
     /// Horizontal dash
-    if (playerHorizontal_dash = 1)  &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (player_vsp &lt;= 1 ) /* &lt;-- Cambiar en cuando haya spr 45 hacia arriba por "(abs(player_vsp) &lt; 1 )" */ 
+    if (playerHorizontal_dash = 1)  &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (player_vsp &lt;= 1 ) /* &lt;-- Cambiar en cuando haya spr 45 hacia arriba por "(abs(player_vsp) &lt; 1 )" */  &amp;&amp; (spr_animationSpin = 0)
     {
         if (player_viewDir = 1) { sprite_index = spr_player_dashHorizontalR; }
         if (player_viewDir = -1) { sprite_index = spr_player_dashHorizontalL; }   
@@ -553,7 +641,7 @@ if (jumpInWallL = 1)
     }
     
         ////Dash 45
-        if (playerHorizontal_dash = 1) &amp;&amp; (player_vsp &gt; 1) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+        if (playerHorizontal_dash = 1) &amp;&amp; (player_vsp &gt; 1) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
         {
             spriteLoop = 0;
             if (player_viewDir = 1) { sprite_index = spr_player_dash45R; }
@@ -567,7 +655,7 @@ if (jumpInWallL = 1)
         }
    
 // Basic Attack
-if (spr_animationBasicAttack = 1) &amp;&amp; (timing_spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0)
+if (spr_animationBasicAttack = 1) &amp;&amp; (timing_spr_animationBasicAttack = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) &amp;&amp; (spr_animationSpin = 0)
 {
     if (player_viewDir = 1) { sprite_index = spr_player_basicAtackR; }
     if (player_viewDir = -1) { sprite_index = spr_player_basicAtackL; }   
@@ -579,6 +667,20 @@ if (spr_animationBasicAttack = 1) &amp;&amp; (timing_spr_animationBasicAttack = 
 }
 if (spr_animationBasicAttack = 1) &amp;&amp; (image_index &gt;= image_number - 1) { timing_spr_animationBasicAttack += (1/120) }
 if (timing_spr_animationBasicAttack &gt;= timeMax_spr_animationBasicAttack) { spr_animationBasicAttack = 0; timing_spr_animationBasicAttack = 0;}
+
+
+// Spin
+if (spr_animationSpin = 1) &amp;&amp; (timing_spr_animationSpin = 0) &amp;&amp; (jumpInWallR = 0) &amp;&amp; (jumpInWallL = 0) {
+    if (player_viewDir = 1) { sprite_index = spr_player_spinR; }
+    if (player_viewDir = -1) { sprite_index = spr_player_spinL; }
+    if (cont_spr_animationSpin = 0) { image_index = 0; cont_spr_animationSpin = 1; }
+    image_speed = 0.2;
+    spriteLoop = 1;
+} else {
+    cont_spr_animationSpin = 0; 
+}
+if (spr_animationSpin = 1) { timing_spr_animationSpin += (1/120) }
+if (timing_spr_animationSpin &gt;= timeMax_spr_animationSpin) { spr_animationSpin = 0; timing_spr_animationSpin = 0;}
 </string>
           </argument>
         </arguments>
@@ -602,26 +704,41 @@ if (timing_spr_animationBasicAttack &gt;= timeMax_spr_animationBasicAttack) { sp
             <string>/// Climb 1/2 block
 
 /*PAUSE GAME*/ if pause exit; /*END PAUSE GAME*/
+catch_edge_first = 53;
 
-if 
-    (
-     place_free(x+1*player_movDir, y-35) &amp;&amp; (!place_free(x+1*player_movDir, y-34)) &amp;&amp; (key_right) &amp;&amp; (key_sprint) &amp;&amp; (autoRise = 0) &amp;&amp; (playerHorizontal_dash = 0)
+if ( place_free(x+1*player_movDir, y-catch_edge_first) &amp;&amp; (!place_free(x+1*player_movDir, y-(catch_edge_first-1))) ) {
+    if 
+    ( (key_left) &amp;&amp; (key_sprint) &amp;&amp; (autoRise = 0) &amp;&amp; (playerHorizontal_dash = 0) )
     ||
-     place_free(x+1*player_movDir, y-35) &amp;&amp; (!place_free(x+1*player_movDir, y-34)) &amp;&amp; (key_left) &amp;&amp; (key_sprint) &amp;&amp; (autoRise = 0) &amp;&amp; (playerHorizontal_dash = 0)
-    )
-{
-    climbBlock = 1;
+    ( (key_right) &amp;&amp; (key_sprint) &amp;&amp; (autoRise = 0) &amp;&amp; (playerHorizontal_dash = 0) ) {
+            climbBlock = 1;
+    }
+}
+
+if (climbBlock = 1) {
+    if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-45)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-45)-1))) {
+        end_jumpClimb = 1;
+    } else {
+        if end_jumpClimb = 0 {
+            player_vsp = -0.4;
+        }
+    }
+} else {
+    end_jumpClimb = 0;
+}
+
+if (end_jumpClimb = 1) &amp;&amp; (climbBlock = 1) {
+    player_vsp = -0.8;
 }
 
 
-if (climbBlock = 1)
-{
-    player_vsp = -0.4;
-}
- 
 
-/*/ sprite image 0
-if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-35) &amp;&amp; (!place_free(x+1*player_movDir, y-(35-1))) {
+
+/*
+//sprite image 0
+if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-35) &amp;&amp; (!place_free(x+1*player_movDir, 
+
+y-(35-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -635,7 +752,9 @@ if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-35) &amp;&amp; (!
 }
 
 // sprite image 1
-if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-34) &amp;&amp; (!place_free(x+1*player_movDir, y-(34-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-34) &amp;&amp; (!place_free(x+1*player_movDir, 
+
+y-(34-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -650,7 +769,9 @@ if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-34) &amp;&amp; (!
 
 
 // sprite image 2
-if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-32) &amp;&amp; (!place_free(x+1*player_movDir, y-(32-1))) {        
+if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-32) &amp;&amp; (!place_free(x+1*player_movDir, 
+
+y-(32-1))) {        
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -665,7 +786,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+1*player_movDir, y-32) &amp;&amp; (!
 
 */
 // sprite image 3
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-35) &amp;&amp; (!place_free(x+1*player_movDir, y-(35-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-catch_edge_first) &amp;&amp; (!place_free(x+1*player_movDir, y-(catch_edge_first-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -679,7 +800,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-35) &amp;&amp; (!
 }
 
 // sprite image 4
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-34) &amp;&amp; (!place_free(x+1*player_movDir, y-(34-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-1)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-1)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -693,7 +814,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-34) &amp;&amp; (!
 }
 
 // sprite image 5
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-33) &amp;&amp; (!place_free(x+1*player_movDir, y-(33-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-2)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-2)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -707,7 +828,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-33) &amp;&amp; (!
 }
 
 // sprite image 6
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-32) &amp;&amp; (!place_free(x+1*player_movDir, y-(32-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-3)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-3)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -721,7 +842,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-32) &amp;&amp; (!
 }
 
 // sprite image 7
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-31) &amp;&amp; (!place_free(x+1*player_movDir, y-(31-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-4)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-4)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -735,7 +856,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-31) &amp;&amp; (!
 }
 
 // sprite image 8
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-30) &amp;&amp; (!place_free(x+1*player_movDir, y-(30-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-6)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-6)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -749,7 +870,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-30) &amp;&amp; (!
 }
 
 // sprite image 9
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-29) &amp;&amp; (!place_free(x+1*player_movDir, y-(29-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-16)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-16)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -763,7 +884,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-29) &amp;&amp; (!
 }
 
 // sprite image 10
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-25) &amp;&amp; (!place_free(x+1*player_movDir, y-(25-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-20)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-20)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -777,7 +898,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-25) &amp;&amp; (!
 }
 
 // sprite image 11
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-23) &amp;&amp; (!place_free(x+1*player_movDir, y-(23-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-25)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-25)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -790,8 +911,8 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-23) &amp;&amp; (!
     }
 }
 
-// sprite image 12
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-21) &amp;&amp; (!place_free(x+1*player_movDir, y-(21-1))) {
+// sprite image 12 //Last frame climbing
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-30)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-30)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -805,7 +926,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-21) &amp;&amp; (!
 }
 
 // sprite image 13
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-18) &amp;&amp; (!place_free(x+1*player_movDir, y-(18-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-49)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-49)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -818,8 +939,8 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-18) &amp;&amp; (!
     }
 }
 
-// sprite image 14 //END UP
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-15) &amp;&amp; (!place_free(x+1*player_movDir, y-(15-1))) {
+// sprite image 14
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-50)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-50)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -833,7 +954,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-15) &amp;&amp; (!
 }
 
 // sprite image 15
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-12) &amp;&amp; (!place_free(x+1*player_movDir, y-(12-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-(catch_edge_first-51)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-51)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -847,7 +968,7 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-12) &amp;&amp; (!
 }
 
 // sprite image 16
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+10) &amp;&amp; (!place_free(x+1*player_movDir, y-(10-1))) {
+if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+(catch_edge_first-52)) &amp;&amp; (!place_free(x+1*player_movDir, y-((catch_edge_first-52)-1))) {
     if (key_right) {
         sprite_index = spr_player_TreparBordeR;
         image_speed = 0;
@@ -860,76 +981,13 @@ if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+10) &amp;&amp; (!
     }
 }
 
-// sprite image 17
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+8) &amp;&amp; (!place_free(x+1*player_movDir, y-(8-1))) {
-    if (key_right) {
-        sprite_index = spr_player_TreparBordeR;
-        image_speed = 0;
-        image_index = 17;
-    }
-    if (key_left) {
-        sprite_index = spr_player_TreparBordeL;
-        image_speed = 0;
-        image_index = 16;
-    }
-}
 
-// sprite image 18
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+5) &amp;&amp; (!place_free(x+1*player_movDir, y-(5-1))) {
-    if (key_right) {
-        sprite_index = spr_player_TreparBordeR;
-        image_speed = 0;
-        image_index = 18;
-    }
-    if (key_left) {
-        sprite_index = spr_player_TreparBordeL;
-        image_speed = 0;
-        image_index = 17;
-    }
-}
 
-// sprite image 19
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+3) &amp;&amp; (!place_free(x+1*player_movDir, y-(3-1))) {
-    if (key_right) {
-        sprite_index = spr_player_TreparBordeR;
-        image_speed = 0;
-        image_index = 19;
-    }
-    if (key_left) {
-        sprite_index = spr_player_TreparBordeL;
-        image_speed = 0;
-        image_index = 17;
-    }
-}
 
-// sprite image 20
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y+1) &amp;&amp; (!place_free(x+1*player_movDir, y-(1-1))) {
-    if (key_right) {
-        sprite_index = spr_player_TreparBordeR;
-        image_speed = 0;
-        image_index = 20;
-    }
-    if (key_left) {
-        sprite_index = spr_player_TreparBordeL;
-        image_speed = 0;
-        image_index = 18;
-    }
-}
 
-// sprite image 21
-if (climbBlock = 1) &amp;&amp; place_free(x+2*player_movDir, y-0) &amp;&amp; (!place_free(x+1*player_movDir, y-(0-1))) {
-    if (key_right) {
-        sprite_index = spr_player_TreparBordeR;
-        image_speed = 0;
-        image_index = 21;
-    }
-    if (key_left) {
-        sprite_index = spr_player_TreparBordeL;
-        image_speed = 0;
-        image_index = 18;
-    }
-}
 
+
+//END CLIMB
 if (place_free(x+1*player_movDir, y)) || (!key_sprint) {
     climbBlock = 0;
 }
@@ -989,7 +1047,7 @@ if ( (!place_free(x+(player_hsp*2*abs(player_movDir)),y)) &amp;&amp; (place_free
 /*PAUSE GAME*/ if pause exit; /*END PAUSE GAME*/
 
 /// Basic attack
- if (keyboard_check_pressed(ord("W"))) &amp;&amp; (playerStamina &gt;= staminaBasicAttack) &amp;&amp; (playerStuned = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerBasicAttackCD &lt;= 0) { 
+ if (keyboard_check_pressed(ord("W"))) &amp;&amp; (playerStamina &gt;= staminaBasicAttack) &amp;&amp; (playerStuned = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerBasicAttackCD &lt;= 0) &amp;&amp; (playerSpin = 0) { 
     playerBasicAttack = 1; 
     wasteStaminaBasAtt = 1;
  } else { 
@@ -1009,8 +1067,34 @@ if ( (!place_free(x+(player_hsp*2*abs(player_movDir)),y)) &amp;&amp; (place_free
     wasteStaminaBasAtt = 0;
  }
  
+ 
+/// Spin
+if (keyboard_check_pressed(ord("A"))) &amp;&amp; (playerStamina &gt;= staminaSpin) &amp;&amp; (playerStuned = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (playerVertical_dash = 0) &amp;&amp; (playerSpinCD &lt;= 0) &amp;&amp; (playerBasicAttack = 0) { 
+    playerSpin = 1;
+    wasteStaminaSpin = 1;
+}
+
+if playerSpin = 1 {
+    spr_animationSpin = 1; 
+    playerSpinCD = SpinCD;      
+    timeSpin += 1/120;
+    if timeSpin &gt;= LongSpin { playerSpin = 0; timeSpin = 0;}
+}
+
+ if (spr_animationSpin = 1) { player_vsp = player_vsp/2; player_hsp = player_hsp/2; }
+
+    //cd
+ if (playerSpin = 0) &amp;&amp; (playerSpinCD &gt; 0) {
+    playerSpinCD -= 1/120;
+ }
+
+if wasteStaminaSpin = 1 {
+    playerStamina -= staminaSpin;
+    wasteStaminaSpin = 0;    
+}
+ 
 /// Vertical Dash
- if (keyboard_check_pressed(ord("S"))) &amp;&amp; (playerStamina &gt;= staminaVDash) &amp;&amp; (playerStuned = 0) &amp;&amp; (place_free(x,y+1)) &amp;&amp; (playerVertical_dashCD &lt;= 0) &amp;&amp;(!collision_line(x, y, x, y+20, obj_solid, true, true)) &amp;&amp; (climbBlock = 0) &amp;&amp; (nextToWallSliding = 0) &amp;&amp; (playerHorizontal_dash = 0) 
+ if (keyboard_check_pressed(ord("S"))) &amp;&amp; (playerStamina &gt;= staminaVDash) &amp;&amp; (playerStuned = 0) &amp;&amp; (place_free(x,y+1)) &amp;&amp; (playerVertical_dashCD &lt;= 0) &amp;&amp;(!collision_line(x, y, x, y+20, obj_solid, true, true)) &amp;&amp; (climbBlock = 0) &amp;&amp; (nextToWallSliding = 0) &amp;&amp; (playerHorizontal_dash = 0) &amp;&amp; (playerSpin = 0) 
   { 
     playerVertical_dash = 1;
     wasteStaminaVDash = 1;
@@ -1018,6 +1102,8 @@ if ( (!place_free(x+(player_hsp*2*abs(player_movDir)),y)) &amp;&amp; (place_free
  if (!place_free(x,y+1)) { playerVertical_dash = 0; }
  if (playerVertical_dash = 1) { 
     Check_collisionVDash = 1; 
+    global.player_hsp = 0;
+    global.player_vsp += vspVerticalDash;
     playerVertical_dashCD = VerticalDashCD;
  }
  if (Check_collisionVDash = 1) &amp;&amp; (!place_free (x,y+1)) { playerCollisionVDash = 1; } else { playerCollisionVDash = 0; }
@@ -1032,7 +1118,7 @@ if (playerVertical_dash = 0) &amp;&amp; (playerVertical_dashCD &gt; 0) {
  }
  
 /// Horizontal Dash
-if (keyboard_check_pressed(ord("D"))) &amp;&amp; (playerStamina &gt;= staminaHDash) &amp;&amp; (playerStuned = 0) &amp;&amp; (HorDashTimer = 0) &amp;&amp; (playerHorizontal_dashCD &lt;= 0) { 
+if (keyboard_check_pressed(ord("D"))) &amp;&amp; (playerStamina &gt;= staminaHDash) &amp;&amp; (playerStuned = 0) &amp;&amp; (HorDashTimer = 0) &amp;&amp; (playerHorizontal_dashCD &lt;= 0) &amp;&amp; (playerSpin = 0){ 
     playerHorizontal_dash = 1; 
     save1 = maxSpeed; 
     wasteStaminaHDash = 1;
@@ -1168,7 +1254,7 @@ if (timingRegenHP &lt;= playerNoBattle) {
 
 if (timingRegenHP &gt;= playerNoBattle) {
     if (playerHeal &lt; playerMaxHeal) {
-        if (regenHPacc &lt; regenHPs) { regenHPacc += accelerationRegenHP; }
+        if (regenHPacc &lt; regenHPs/120) { regenHPacc += accelerationRegenHP; }
         playerHeal += regenHPacc;
     }
     
@@ -1221,6 +1307,166 @@ if playerHeal &lt;= 0 {
 if playerStuned = 1 {
     player_hsp = 0;
     player_vsp = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Particles
+
+/*PAUSE GAME*/ if pause exit; /*END PAUSE GAME*/
+
+if (sprite_index = spr_player_sprintR) || (sprite_index = spr_player_sprintL){
+    timeParSprint += 1/120;
+    if timeParSprint &gt;= 0.1 {    
+        if player_movDir = 1 {
+            if parSprrint = 1 {
+                part_particles_create(ps,x-17,y,dustWalkL,1)
+            } else {
+                part_particles_create(ps,x+13,y,dustWalkL,1)
+            }
+        }
+        if player_movDir = -1 {
+            if parSprrint = -1 {
+                part_particles_create(ps,x+10,y,dustWalkR,1)
+            } else {
+                part_particles_create(ps,x-5,y,dustWalkR,1)
+            }
+        }
+        if timeParSprint &gt;= 0.2 {
+            if parSprrint = 1 { parSprrint = -1 } else { parSprrint = 1; }
+            timeParSprint = 0;    
+        }
+    }
+}
+    
+    
+if keyboard_check(vk_numpad2) {
+    if player_movDir = 1 {
+        part_particles_create(ps,x-20,y,dustWalkL,5)
+    }
+    if player_movDir = -1 {
+        part_particles_create(ps,x+10,y,dustWalkR,5)
+    }
+}
+
+if keyboard_check(vk_numpad0) {
+    part_particles_create(ps,mouse_x,mouse_y,test1,1)
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Lvl &amp;&amp; EXP
+
+/*PAUSE GAME*/ if pause exit; /*END PAUSE GAME*/
+
+if playerEXP &gt;= playerEXPnextLvL {
+    playerLvL += 1;
+    playerEXP -= playerEXPnextLvL;
+    playerPH += 2;
+    playerEXPnextLvL = playerEXPnextLvL + playerEXPaddNewLvL;
+    animationNextLvL = 1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///View follow player
+
+/* FOLLOW AT INSTANT THE PLAYER
+view_xview[view_current] = obj_player.x - (view_wview[view_current]/2);
+*/ 
+
+
+//-------------------------//
+
+
+/* SCROLL WHEN PLAYER GO OUT
+hVelMovView = 20; //Value of the vertical velodity of the view
+
+if (360 - obj_player.y + view_yview[view_current]) &lt; 0 {
+    moveView = 1
+}
+
+if 360 - obj_player.y &gt; 0 {
+    moveView = -1
+}
+
+if moveView = -1 {
+    view_yview[view_current] -= hVelMovView;
+    if (360 - obj_player.y + view_yview[view_current]) &gt; 0 {
+        moveView = 0;
+    }
+}
+
+if moveView = 1 {
+    view_yview[view_current] += hVelMovView;
+    if 360 - obj_player.y &gt; 0 {
+        moveView = 0;
+    }
+}
+*/
+
+
+//-------------------------//
+
+
+
+if (360 - obj_player.y + view_yview[view_current]) &lt; 0 {
+    view_yview[view_current] += 360;
+}
+
+if 360 - obj_player.y &gt; 0 {
+    view_yview[view_current] -= 360;
 }
 </string>
           </argument>

@@ -25,9 +25,26 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>window_set_size( display_get_width(), display_get_height() );
-globalvar wdisplay; wdisplay = display_get_width();
-globalvar hdisplay; hdisplay = display_get_height();
+            <string>globalvar saveNum; saveNum = 0;
+globalvar showInitialPanel; showInitialPanel = 1;
+globalvar fullscreen; fullscreen = 1;
+
+if (file_exists("Config.sav")) {
+
+    ini_open("Config.sav")
+        global.fullscreen = ini_read_real("Screen Configuration","fullscreen",0)
+        global.wdisplay = ini_read_real("Screen Configuration","Resolution W",16)
+        global.hdisplay = ini_read_real("Screen Configuration","Resolution H",9)
+    ini_close();
+    
+    window_set_size(wdisplay,hdisplay)
+    if fullscreen = 0 { window_set_fullscreen(false) } else { window_set_fullscreen(true) }
+
+} else {
+    window_set_size( display_get_width(), display_get_height() );
+    globalvar wdisplay; wdisplay = display_get_width();
+    globalvar hdisplay; hdisplay = display_get_height();
+}
 </string>
           </argument>
         </arguments>
@@ -51,7 +68,13 @@ globalvar hdisplay; hdisplay = display_get_height();
           <argument>
             <kind>1</kind>
             <string>///Go to menu
+
+if !window_get_fullscreen(){
+    window_center();
+}
+
 room_goto(room_menu);
+instance_destroy();
 </string>
           </argument>
         </arguments>

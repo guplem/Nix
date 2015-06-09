@@ -7,18 +7,18 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>0</bbox_left>
-  <bbox_right>48</bbox_right>
+  <bbox_left>3</bbox_left>
+  <bbox_right>47</bbox_right>
   <bbox_top>0</bbox_top>
-  <bbox_bottom>63</bbox_bottom>
+  <bbox_bottom>60</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>51</width>
-  <height>64</height>
+  <width>52</width>
+  <height>61</height>
   <frames>
     <frame index="0">images\spr_player_TreparBordeL_0.png</frame>
     <frame index="1">images\spr_player_TreparBordeL_1.png</frame>
@@ -36,8 +36,5 @@
     <frame index="13">images\spr_player_TreparBordeL_13.png</frame>
     <frame index="14">images\spr_player_TreparBordeL_14.png</frame>
     <frame index="15">images\spr_player_TreparBordeL_15.png</frame>
-    <frame index="16">images\spr_player_TreparBordeL_16.png</frame>
-    <frame index="17">images\spr_player_TreparBordeL_17.png</frame>
-    <frame index="18">images\spr_player_TreparBordeL_18.png</frame>
   </frames>
 </sprite>

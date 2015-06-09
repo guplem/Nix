@@ -61,6 +61,16 @@ globalvar finalDmgToPlayer; finalDmgToPlayer = 0; // Final damage that recive th
 timeBasAtt = 0; // Var to calculate the delay of bas attack
 timingBasAtt = 0; // Var 2 to calculate the delay of bas attack
 depth = -(10+irandom(1)); // Depth of the instance
+EXP = 17;
+
+    //PARTICLES
+         // Create the particle system
+        pt_blood0 = part_type_create();
+        pt_blood1 = part_type_create();
+        pt_blood2 = part_type_create();
+        pt_blood3 = part_type_create();
+        
+
 
     //Sprites
     spriteLoop = 0; //If the sprite have restarts after ends (1) or not (0)
@@ -74,6 +84,14 @@ depth = -(10+irandom(1)); // Depth of the instance
     ResAPBasicAttack = 0;
     APdmgBasicAttack = 0;
     BasicAttackHit = 0;
+    ///Spin from player variables
+    ArmourSpin =  0;
+    ADdmgSpin = 0;
+    ResAPSpin = 0;
+    APdmgSpin = 0;
+    SpinHit = 0;
+    timeSpinIn = 0;
+    startSpin = 0;
     ///VDash from player variables    
     ArmourVDash =  0;
     ADdmgVDash = 0;
@@ -127,6 +145,94 @@ ehp = 20; // HP
 waitTOattackPlayer = 0.1; // Seconds waiting to attack player the first time
 delayBasAtt = 0.25; // Seconds of delay to aply the dmg of the basic attack
 CDattackPlayer = 2; //CD between every attack
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Particles
+ps_enemyControl = part_system_create();
+
+    // pt_PlayerBlood0 
+        pt_PlayerBlood0 = part_type_create();
+        part_type_shape(pt_PlayerBlood0,pt_shape_disk);
+        part_type_size(pt_PlayerBlood0,.01,.02,0,0);
+        part_type_colour2(pt_PlayerBlood0,c_red,c_maroon);
+        part_type_speed(pt_PlayerBlood0,2,5,-1,0);
+        part_type_direction(pt_PlayerBlood0,180,359,20,5);
+        part_type_gravity(pt_PlayerBlood0,.2,270);
+        part_type_life(pt_PlayerBlood0,25,50);
+        part_system_depth(pt_PlayerBlood0, (obj_player.depth-1) );
+        
+    // pt_blood0 
+            pt_blood0 = part_type_create();
+            part_type_shape(pt_blood0,pt_shape_disk);
+            part_type_size(pt_blood0,.01,.02,0,0);
+            part_type_colour2(pt_blood0,c_red,c_maroon);
+            part_type_speed(pt_blood0,2,5,-1,0);
+            part_type_direction(pt_blood0,180,359,20,5);
+            part_type_gravity(pt_blood0,.2,270);
+            part_type_life(pt_blood0,25,50);
+            part_system_depth(pt_blood0, (depth-1) );
+            
+    // pt_blood 1
+            pt_blood1 = part_type_create();
+            part_type_shape(pt_blood1,pt_shape_disk);
+            part_type_size(pt_blood1,.01,.02,0,0);
+            part_type_colour2(pt_blood1,c_red,c_maroon);
+            part_type_speed(pt_blood1,2,5,-1,0);
+            part_type_direction(pt_blood1,180,359,20,5);
+            part_type_gravity(pt_blood1,.2,270);
+            part_type_life(pt_blood1,25,50);
+            part_system_depth(pt_blood1, (depth-1) );
+            
+    // pt_blood2
+            pt_blood2 = part_type_create();
+            part_type_shape(pt_blood2,pt_shape_disk);
+            part_type_size(pt_blood2,.01,.02,0,0);
+            part_type_colour2(pt_blood2,c_red,c_maroon);
+            part_type_speed(pt_blood2,2,5,-1,0);
+            part_type_direction(pt_blood2,180,359,20,5);
+            part_type_gravity(pt_blood2,.2,270);
+            part_type_life(pt_blood2,25,50);
+            part_system_depth(pt_blood2, (depth-1) );
+            
+    // pt_blood3
+            pt_blood3 = part_type_create();
+            part_type_shape(pt_blood3,pt_shape_disk);
+            part_type_size(pt_blood3,.01,.02,0,0);
+            part_type_colour2(pt_blood3,c_red,c_maroon);
+            part_type_speed(pt_blood3,2,5,-1,0);
+            part_type_direction(pt_blood3,180,359,20,5);
+            part_type_gravity(pt_blood3,.2,270);
+            part_type_life(pt_blood3,25,50);
+            part_system_depth(pt_blood3, (depth-1) );
+            
+    // pt_death
+            pt_death = part_type_create();
+            part_type_shape(pt_death,pt_shape_disk);
+            part_type_size(pt_death,.01,.02,0,0);
+            part_type_colour2(pt_death,c_navy,c_gray);
+            part_type_speed(pt_death,5,10,-1,0);
+            part_type_direction(pt_death,20,160,20,2);
+            part_type_gravity(pt_death,.3,90);
+            part_type_life(pt_death,40,50);
+            part_system_depth(pt_death, (depth-1) );            
 </string>
           </argument>
         </arguments>
@@ -521,9 +627,8 @@ if ( (!place_free(x+hsp,y)) &amp;&amp; (place_free(x+hsp, y-check_rise)) )
 
 /*PAUSE GAME*/ if pause exit; /*END PAUSE GAME*/
 
+
 /*/ Player attacks ennemy /*/
-
-
 
 //// player Basic attack
     // Calculate AD dmg
@@ -562,6 +667,11 @@ if (timing_spr_animationBasicAttack &gt; 0) &amp;&amp; (playerBasicAttackHit = 1
         //Dmg
     finalDmgToPlayer = (playerBasicAttackdmg * criticDamage);    
     ehp -= finalDmgToPlayer;
+        
+        //particles
+    part_particles_create(ps_enemyControl,x,y-10,pt_blood0,10)    
+    
+        
     if (criticDamage = 1) { 
         action_create_object(obj_dmgToEn,x,y-yHead-5)
     } else {
@@ -572,6 +682,70 @@ if (timing_spr_animationBasicAttack &gt; 0) &amp;&amp; (playerBasicAttackHit = 1
     playerBasicAttackHit = 0;
 }
 
+
+
+//// Spin
+    // Calculate AD dmg
+ArmourSpin = armour - (global.playerPenArm*global.playerPenArmSpin)
+    if (ArmourSpin &lt; 0) { ArmourSpin =  0; }
+ADdmgSpin = (global.playerAD*global.playerADSpin) - ArmourSpin
+    if (ADdmgSpin &lt; 0) { ADdmgSpin =  0; }
+    // Calculate AP dmg
+ResAPSpin = resAP - (global.playerPenAP*global.playerPenAPSpin)
+    if (ResAPVDash &lt; 0) { ResAPVDash =  0; }
+APdmgSpin = (global.playerAP*global.playerAPSpin) - ResAPSpin
+    if (APdmgSpin &lt; 0) { APdmgSpin =  0; }
+    // Calculate total dmg
+playerSpindmg = ( 
+      ADdmgSpin
+    + APdmgSpin
+    + (global.playerTrueAD*global.playerTrueADSpin) 
+    + (global.playerTrueAP*global.playerTrueAPSpin) 
+);
+
+if (playerSpin = 1){
+    if (startSpin = 0) {
+        timeSpinIn = everSpinHitTime;
+        startSpin  = 1;
+    }
+} else {
+    startSpin = 0;
+}
+
+if (notRandom_nearPlayer = 1) &amp;&amp; (playerSpin = 1){
+    timeSpinIn += 1/120;
+    if timeSpinIn &gt;= everSpinHitTime {
+        SpinHit = 1;
+        timeSpinIn = 0;
+    } else {
+        SpinHit = 0;
+    }
+}
+
+
+if (SpinHit = 1){
+        // Movment
+    hsp += (sign(x-obj_player.x) * movDmgFromPLayer);
+    vsp -= (movDmgFromPLayer/4)    
+    
+        //Calculate critic
+    if (irandom(100) &lt; (global.playerCritickProbability*global.playerCritickProbabilitySpin) ) { 
+        criticDamage = (global.playerCritickDamage*global.playerCritickDamageSpin);
+    } else { 
+        criticDamage = 1;
+    }
+    
+    finalDmgToPlayer = (playerBasicAttackdmg * criticDamage);    
+    ehp -= finalDmgToPlayer;
+        //particles
+    part_particles_create(ps_enemyControl,x,y-10,pt_blood1,10)
+            
+    if (criticDamage = 1) { 
+        action_create_object(obj_dmgToEn,x,y-yHead-5)
+    } else {
+        action_create_object(obj_dmgCrToEn,x,y-yHead-5)
+    }
+}
 
 
 
@@ -612,6 +786,9 @@ if (notRandom_nearPlayer = 1) &amp;&amp; (playerCollisionVDash = 1)
     
     finalDmgToPlayer = (playerBasicAttackdmg * criticDamage);    
     ehp -= finalDmgToPlayer;
+        //particles
+    part_particles_create(ps_enemyControl,x,y-10,pt_blood2,10)
+            
     if (criticDamage = 1) { 
         action_create_object(obj_dmgToEn,x,y-yHead-5)
     } else {
@@ -619,8 +796,6 @@ if (notRandom_nearPlayer = 1) &amp;&amp; (playerCollisionVDash = 1)
     }
     
     playerVDashHit = 1;
-} else {
-    
 }
 
 
@@ -664,6 +839,9 @@ if (playerHDashHit = 1){
         //Dmg
     finalDmgToPlayer = (playerBasicAttackdmg * criticDamage);    
     ehp -= finalDmgToPlayer;
+        // Particles
+    part_particles_create(ps_enemyControl,x,y-10,pt_blood3,10)
+    
     if (criticDamage = 1) { 
         action_create_object(obj_dmgToEn,x,y-yHead-5)
     } else {
@@ -684,6 +862,19 @@ if (notRandom_nearPlayer = 1) &amp;&amp; (playerHorizontal_dash = 1)
 //// If the instance don't have life ////
 if (ehp &lt;= 0)
 {
+    while EXP &gt; 0 {
+        if (EXP-5)&gt;0 {
+            action_create_object(obj_exp5,x-5+random(10),y-5-random(5))
+            EXP -= 5;
+        } else {
+            action_create_object(obj_exp1,x-5+random(10),y-5-random(5))
+            EXP -= 1;
+        }
+    }
+    part_particles_create(ps_enemyControl,x,y-60,pt_death,15)
+    part_particles_create(ps_enemyControl,x,y-40,pt_death,15)
+    part_particles_create(ps_enemyControl,x,y-20,pt_death,15)
+    part_particles_create(ps_enemyControl,x,y,pt_death,15)
     instance_destroy();
 }
 ////---------------------------------////
@@ -802,7 +993,7 @@ if (timingAttack &gt;= CDattackPlayer) &amp;&amp; (TOattackPlayer = 1) &amp;&amp
 
 if timeBasAtt = 1 {
     timingBasAtt += 1/120;    
-    if (timingBasAtt &gt;= delayBasAtt) {
+    if (timingBasAtt &gt;= delayBasAtt) &amp;&amp; (coll_line = 0){
         timingBasAtt = 0
         timeBasAtt = 0;
         //Decrease HP
@@ -812,8 +1003,11 @@ if timeBasAtt = 1 {
         //Mov reaction
         player_hsp += (sign(obj_player.x-x) * movDmgToPLayer)/resKnockback;
         player_vsp -= (movDmgToPLayer/4)/resKnockback;
+        part_particles_create(ps_enemyControl,obj_player.x,obj_player.y-10,pt_PlayerBlood0,10)
+        
     }
 }
+
 </string>
           </argument>
         </arguments>

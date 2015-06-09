@@ -25,11 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>x= view_xview[view_current] + (view_wview[view_current]/2);
+y= view_yview[view_current] + (view_hview[view_current]-15);
+
+draw_set_alpha(1);
 draw_set_color(c_dkgray);
 draw_set_font(fnt_default6);
 draw_set_halign(fa_center);
-draw_text((obj_player.x),(room_height-77),"JUMP --&gt; SPACE #LEFT &amp; RIGHT --&gt; LEFT &amp; RIGHT ARROWS #GRIP --&gt; SHIFT #VERTICAL DASH --&gt; S (ON AIR) #HORIZONTAL DASH --&gt; D #SPRINT --&gt; SHIFT #ATTACK --&gt; W");
+draw_text(x,y,"ATTACKS: W, A, S, D   MOVEMENT: Arrows");
 
 </string>
           </argument>

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-99999999</depth>
+  <depth>-99</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -64,7 +64,7 @@ if !instance_exists(obj_enemy_standard) &amp;&amp; !instance_exists(spawn_obj_en
     draw_set_color(c_gray);
     draw_set_font(fnt_default50);
     draw_set_halign(fa_center);
-    draw_text(x,y-100,"You Win!");
+    draw_text(x,y-100,"Victory!");
     
     draw_set_font(fnt_default12);    
     draw_text(x,y,"Press ENTER to continue looking things on the map.#Press ESC to restart the game.");

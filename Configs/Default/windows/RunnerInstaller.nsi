@@ -27,7 +27,7 @@
 !endif
 
 !ifndef COPYRIGHT_TXT
-!define COPYRIGHT_TXT     "(c)Copyright 2013"
+!define COPYRIGHT_TXT     "(c)Copyright 2015"
 !endif
 
 !ifndef FILE_DESC

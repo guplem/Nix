@@ -27,6 +27,14 @@
             <kind>1</kind>
             <string>s = 0;
 frameCartel = 0;
+showUpdate = 0;
+
+//Update
+globalvar currentStableVersion; currentStableVersion = "";
+globalvar dateStableVersion; dateStableVersion = "";
+globalvar currentTestVersion; currentTestVersion = "";
+globalvar dateTestVersion; dateTestVersion = "";
+checkVersion = 1;
 </string>
           </argument>
         </arguments>
@@ -49,7 +57,8 @@ frameCartel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if keyboard_check_pressed(vk_f2) {
+            <string>///Center screen
+if keyboard_check_pressed(vk_f2) {
     if !window_get_fullscreen(){
         window_center();
     }
@@ -80,7 +89,7 @@ frameCartel = 0;
 x= view_wview/2
 y= view_hview/2
 
-if showInitialPanel = 0 {
+if showInitialPanel = 0 &amp;&amp; showUpdate = 0{
     
     if (s &lt; 2) &amp;&amp; (keyboard_check_pressed(vk_down)) {
         s += 1;
@@ -176,8 +185,73 @@ if showInitialPanel = 1 {
     draw_set_alpha(1);
     draw_sprite(spr_initialAd,frameCartel,view_wview/2,view_hview/2)
     if keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_return) || keyboard_check_pressed(vk_space) {
+        keyboard_clear(vk_enter);
+        keyboard_clear(vk_return);
+        keyboard_clear(vk_space);
         showInitialPanel = 0;
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Show update Panel disabled
+
+x= view_wview/2
+y= view_hview/2
+
+        ini_open("version.ini")
+            global.currentStableVersion = ini_read_string("StableVersion","currentStableVersion","SERVER ERROR")
+            global.dateStableVersion = ini_read_string("StableVersion","dateStableVersion","SERVER ERROR")
+            global.currentTestVersion = ini_read_string("TestVersion","currentTestVersion","SERVER ERROR")
+            global.dateTestVersion = ini_read_string("TestVersion","dateTestVersion","SERVER ERROR")
+        ini_close();
+
+if os_is_network_connected() {
+    if showInitialPanel = 0 &amp;&amp; checkVersion = 1{
+        if (string(global.currentStableVersion) != string(gameVersion)) {
+             showUpdate = 1;
+        }
+    }
+} else {
+    showUpdate = 0;
+}
+
+if showUpdate = 1 {
+    draw_set_color(c_black);
+    draw_set_font(fnt_default12);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text(x,y-20,"There is an update available to download #(" + string(currentStableVersion) + ", uploaded in " + string(dateStableVersion) + ")##Would you like to download it?");
+    
+    draw_set_color(c_maroon);
+    draw_text(x,y+130,"Yes (enter)      No (esc)")
+    
+    if keyboard_check_pressed(vk_enter) {
+        url_open("http://www.triunitystudios.com/en/update")
+        game_end();
+    }
+    if keyboard_check_pressed(vk_escape) {
+        showUpdate = 0;
+        checkVersion = 0;
+    }
+
 }
 </string>
           </argument>

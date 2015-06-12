@@ -124,11 +124,11 @@
     <objects name="obj_rooms">
       <object>objects\obj_onLvl</object>
       <objects name="Create_with_onLvl">
+        <object>objects\obj_versionIndicator_text</object>
         <object>objects\obj_stats_bar</object>
         <object>objects\obj_CD</object>
         <object>objects\obj_gameEnd</object>
         <object>objects\obj_general_ALL_ROOMS</object>
-        <object>objects\obj_versionIndicator_text</object>
         <object>objects\obj_controlsMov_Text</object>
         <object>objects\obj_playerStats</object>
         <object>objects\obj_cursor</object>
@@ -172,6 +172,7 @@
     <object>objects\obj_redScreenDmgPlayer</object>
     <object>objects\obj_exp1</object>
     <object>objects\obj_exp5</object>
+    <object>objects\obj_test_upload</object>
   </objects>
   <rooms name="rooms">
     <rooms name="others">

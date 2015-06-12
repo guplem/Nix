@@ -307,7 +307,7 @@
     <option_use_new_audio>True</option_use_new_audio>
     <option_variableerrors>False</option_variableerrors>
     <option_version>0.00.04 Pre-alpha</option_version>
-    <option_version_build>5</option_version_build>
+    <option_version_build>7</option_version_build>
     <option_version_company>Triunity Studios</option_version_company>
     <option_version_copyright>© Triunity Studios</option_version_copyright>
     <option_version_description>Nix is a skill game where will test the abilities of the player defeating hundreds of enemies with dozens of combinations of different attacks.</option_version_description>
@@ -351,7 +351,7 @@
     <option_win8_texture_page>1024</option_win8_texture_page>
     <option_win8_wide_logo>Configs\Default\Windows8\logos\logo310.png</option_win8_wide_logo>
     <option_windowcolor>clBlack</option_windowcolor>
-    <option_windows_build_version>5</option_windows_build_version>
+    <option_windows_build_version>7</option_windows_build_version>
     <option_windows_company_info>Triunity Studios</option_windows_company_info>
     <option_windows_copyright_info>© Triunity Studios</option_windows_copyright_info>
     <option_windows_description_info>Nix is a skill game where will test the abilities of the player defeating hundreds of enemies with dozens of combinations of different attacks.</option_windows_description_info>

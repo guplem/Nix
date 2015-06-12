@@ -20,14 +20,3 @@
 • Added vertical camera movement
 • Created the first world with the first level (continue being a test)
 • Added textures to the level
-
-
-// - Por añadir aún - //
-• Fix Bug AI player in edge
-• Particles
-	- Habilities / Attacks
-	- Exp
-	- Blood
-• Jump obstacle if it is not tall and the player is using the sprint.
-• Add more complete menus
-

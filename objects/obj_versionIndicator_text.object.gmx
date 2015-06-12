@@ -25,7 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>globalvar gameVersion; gameVersion = "0.00.05 Pre-Alpha";
+            <string>globalvar gameVersion; gameVersion = "0.00.07 Pre-Alpha";
+
+/*
+globalvar currentStableVersion; currentStableVersion = "0";
+globalvar DateStableVersion; DateStableVersion = "0";
+
+globalvar currentTestVersion; currentTestVersion = "0";
+globalvar DateTestVersion; DateTestVersion = "0";
+*/
 </string>
           </argument>
         </arguments>

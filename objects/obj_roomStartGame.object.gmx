@@ -29,8 +29,21 @@
 globalvar showInitialPanel; showInitialPanel = 1;
 globalvar fullscreen; fullscreen = 1;
 
-if (file_exists("Config.sav")) {
 
+/*var result, evid;
+evid = ds_map_find_value(async_load, "id");
+
+switch (evid) {
+    case async_ini:
+        result = ds_map_find_value(async_load,"result")
+        file = file_text_open_write("config.ini")
+        file_text_write_string(file, result);
+        file_text_close(file);
+        break;
+}*/
+
+
+if (file_exists("Config.sav")) {
     ini_open("Config.sav")
         global.fullscreen = ini_read_real("Screen Configuration","fullscreen",0)
         global.wdisplay = ini_read_real("Screen Configuration","Resolution W",16)
@@ -39,7 +52,6 @@ if (file_exists("Config.sav")) {
     
     window_set_size(wdisplay,hdisplay)
     if fullscreen = 0 { window_set_fullscreen(false) } else { window_set_fullscreen(true) }
-
 } else {
     window_set_size( display_get_width(), display_get_height() );
     globalvar wdisplay; wdisplay = display_get_width();
@@ -51,6 +63,45 @@ if (file_exists("Config.sav")) {
       </action>
     </event>
     <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Read version
+/*
+var result, evid;
+evid = ds_map_find_value(async_load, "id");
+
+switch (evid) {
+    case async_ini:
+        result = ds_map_find_value(async_load, "result");
+        file = file_text_open_write( "version.ini" );// You can use any filename, but for the sake of simplicity..
+        file_text_write_string(file, result);
+        file_text_close(file);
+        alarm[0] = 10;
+        break;
+}
+
+ini_open("config.ini");
+    str = ini_read_string("version","number","");
+ini_close();
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

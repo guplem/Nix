@@ -37,6 +37,23 @@ sResConfigDef = 15;
 
 toCenter = 0;
 timingToCenter = 0; 
+
+
+
+
+
+/////////////////////////
+if file_exists("version"){
+    ini_open("version")
+        global.CV = ini_read_real("StableVersion","currentStableVersion",0)
+        global.DateStableVersion = ini_read_string("StableVersion","DateStableVersion","")
+        global.currentTestVersion = ini_read_string("TestVersion","currentTestVersion","")
+        global.DateTestVersion = ini_read_string("TestVersion","DateTestVersion","")
+    
+        global.testDw = ini_read_real("Stats - Horizontal Dash","playerCritickDamageHDash",0)
+    
+    ini_close();
+}
 </string>
           </argument>
         </arguments>
@@ -94,6 +111,38 @@ timingToCenter = 0;
 if showPanelOk = 0 {
     if keyboard_check_pressed(vk_escape) { room_goto(room_menu); }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Guardado del ini
+    /*
+    if (file_exists("infoVersion")) file_delete("infoVersion");
+        
+   /* ini_open("infoVersion.sav");
+        ini_write_real("StableVersion","currentStableVersion",CV);
+    ini_close();
+
+
+    ini_open("infoVersion");
+        ini_write_real("TestGroup","TestVar",testDw)
+    ini_close();
 </string>
           </argument>
         </arguments>

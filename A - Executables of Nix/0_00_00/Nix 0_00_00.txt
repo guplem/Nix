@@ -1,5 +1,0 @@
-• Creado el personaje principal.
-• Creados árboles como obstaculos y delimitadores del mapa.
-• Creadas bases de texturas.
-• Creadas animaciones de correr hacia la derecha y hacia la izquierda.
-• Creado mapa de pruebas.

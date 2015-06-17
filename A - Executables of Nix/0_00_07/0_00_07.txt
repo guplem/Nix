@@ -1,2 +1,0 @@
-Corregido error "actualización detecttada" cuando estabas sin conexion a internet
-Corregido bug con el solido de la room "tutorial"

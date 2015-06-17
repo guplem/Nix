@@ -1,5 +1,0 @@
-//Load game
-var/global variable = ini_read_real/ini_read_string("Section","saveName",defaultValue);
-
-//Base Save Game Variables
-ini_write_real/ini_write_string("Section","saveName",varToSave);

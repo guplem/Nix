@@ -1,0 +1,72 @@
+((25/ ( (25/(5)) /2) /2)x) - (2/(2*(25/5))) ((x)(x))
+
+
+
+x = disToPlayer "(value calculate per step)"
+R = InitDisToPlayer "(init value calculate)"
+XXX = MaxVel "(chose)"
+Q = MaxVel(4/InitDisToPlayer) "(init value calculate)
+
+((R/ ( (R/(Q)) /2) /2)*X) - (2/(2*(X/X))) * ((X)*(X))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+if X != 0{
+    sp = ( ((R/ ( (R/(Q)) /2) /2)*X) - (2/(2*(X/X))) * ((X)*(X)) )/1000000;
+}
+
+if (obj_player.x > x) && (abs(hsp) <= maxVel){
+    hsp += sp/2;
+} else {
+    hsp -= sp/2;
+}
+
+if (obj_player.y > y) && (abs(vsp) <= maxVel){
+    vsp += sp/2;
+} else {
+    vsp -= sp/2;
+}
+
+-------------------------------------------------------------------------------------
+
+if X != 0{
+    sp = abs(( ((R/ ( (R/(Q)) /2) /2)*X) - (2/(2*(X/X))) * ((X)*(X)) )/1000000);
+} else {
+    sp = 0;
+}
+
+    if (obj_player.x > x) {
+        if (abs(hsp) <= maxVel){
+            hsp += 0.1;
+        }
+    } else {
+        if (abs(hsp) <= maxVel){
+            hsp -= 0.1;
+        }
+    }
+    
+    if (obj_player.y > y) {
+        if (abs(hsp) <= maxVel){
+            vsp += 0.1;
+        }
+    } else {
+        if (abs(hsp) <= maxVel){
+            vsp -= 0.1;
+        }
+    }

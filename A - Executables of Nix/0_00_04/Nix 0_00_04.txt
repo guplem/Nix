@@ -1,0 +1,35 @@
+• Fixed bugs.
+• Now the dash only afects at the instance that are at the same direction of the player.
+• Now the enemies responds with movement when the player hits them.
+• Now when the player uses the horizontal dash, he moves in the direction of his view automatically.
+• Now if the player uses the basic attack at the air, he stops moving, doing an effect like "bullet time".
+• Resolution has been increased.
+• Added new animations for the player that has more resolution.
+• Now the velocity of the instaces (include the player) don't get slow when rise an small obstacle.
+• Improved the AI of the enemies fixing a bug that had happened when the obstacle was thin.
+• Added attacks from enemies to the player.
+• Added player health regeneration after 2 seconds out of combat.
+• Added health indicator at the top left of the screen.
+• Moved the FPS indicator and the room velocity indicator at the top right of the screen.
+• Now when the player do the vertical dash and collides with the floor, he has a stun.
+• Added abilities's cooldowns.
+• Added indicators of abilities' cooldowns at the left-bottom part of the screen.
+• Now there is an indicator of the damage that done the player vs the enemies when it attacks them.
+• Added animation for the basic attack of the enemy.
+• Changed the enemies colours.
+• Added initial screen (menu) to select if you want to play, change the graphic settings or leave the game.
+• Added screen to change the settings.
+• To see the developer information (FPS, resolution, screen mode, ...) you must press the tab key.
+• Now the game starts with full-screen mode.
+• Now if you want to change the "room velocity" you must have active the developer information.
+• Changed the installation directory
+• Added stamina to the the player.
+• Added stamina cost for each ability/attack.
+• Improved AI.
+• Added walk animation for the enemies.
+• Now when the player is attacked the screen gets red and he moves reacting to the impact of the attack.
+• Changed fonts and improved the quality of the texts.
+• Added pause menu in-game (with disabled "settings" and "save" options).
+
+// - Por añadir aún - //
+"• Poner que se ejecute por defecto en fullscreen"

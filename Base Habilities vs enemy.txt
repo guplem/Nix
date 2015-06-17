@@ -1,0 +1,84 @@
+/////-------------------------------------///////
+IN ENEMI CODEC "PLAYER ATTACKS"
+
+
+
+
+
+//// /*TITLE HABILITY*/
+    // Calculate AD dmg
+Armour/*HABILITY*/ = armour - (global.playerPenArm*global.playerPenArm/*HABILITY*/)
+    if (Armour/*HABILITY*/ < 0) { Armour/*HABILITY*/ =  0; }
+ADdmg/*HABILITY*/ = (global.playerAD*global.playerAD/*HABILITY*/) - Armour/*HABILITY*/
+    if (ADdmg/*HABILITY*/ < 0) { ADdmg/*HABILITY*/ =  0; }
+    // Calculate AP dmg
+ResAP/*HABILITY*/ = resAP - (global.playerPenAP*global.playerPenAP/*HABILITY*/)
+    if (ResAPVDash < 0) { ResAPVDash =  0; }
+APdmg/*HABILITY*/ = (global.playerAP*global.playerAP/*HABILITY*/) - ResAP/*HABILITY*/
+    if (APdmg/*HABILITY*/ < 0) { APdmg/*HABILITY*/ =  0; }
+    // Calculate total dmg
+player/*HABILITY*/dmg = ( 
+      ADdmg/*HABILITY*/
+    + APdmg/*HABILITY*/
+    + (global.playerTrueAD*global.playerTrueAD/*HABILITY*/) 
+    + (global.playerTrueAP*global.playerTrueAP/*HABILITY*/) 
+);
+
+
+if (notRandom_nearPlayer = 1) && (player/*HABILITY*/ = 1){
+    /*HABILITY*/Hit = 1;
+}
+
+
+if (/*HABILITY*/Hit = 1){
+        // Movment
+    hsp += (sign(x-obj_player.x) * movDmgFromPLayer);
+    vsp -= (movDmgFromPLayer/8)
+
+    //Calculate critic
+    if (irandom(100) < (global.playerCritickProbability*global.playerCritickProbability/*HABILITY*/) ) { 
+        criticDamage = (global.playerCritickDamage*global.playerCritickDamage/*HABILITY*/);
+    } else { criticDamage = 1; }
+    
+        //Dmg
+    ehp -= (/*HABILITY*/dmg * criticDamage);
+        
+        //Disable Dmg
+    /*HABILITY*/Hit = 0;
+}
+
+
+
+
+/////-------------------------------------///////
+IN CREATE PLAYER
+
+
+
+
+    // /*TITLE HABILITY*/
+globalvar player/*HABILITY*/; player/*HABILITY*/ = 0;
+
+globalvar playerAD/*HABILITY*/; playerAD/*HABILITY*/ = /*value*/;
+globalvar playerPenArm/*HABILITY*/; playerPenArm/*HABILITY*/ = /*value*/;
+globalvar playerTrueAD/*HABILITY*/; playerTrueAD/*HABILITY*/ = /*value*/;
+globalvar playerAP/*HABILITY*/; playerAP/*HABILITY*/ = /*value*/;
+globalvar playerPenAP/*HABILITY*/; playerPenAP/*HABILITY*/ = /*value*/; 
+globalvar playerTrueAP/*HABILITY*/; playerTrueAP/*HABILITY*/ = /*value*/;
+globalvar playerCritickProbability/*HABILITY*/; playerCritickProbability/*HABILITY*/ = /*value*/; // In % [percentage]
+globalvar playerCritickDamage/*HABILITY*/; playerCritickDamage/*HABILITY*/ = /*value*/;
+
+
+
+
+/////-------------------------------------///////
+IN CREATE ENEMY
+
+
+
+
+Armour/*HABILITY*/ =  0;
+ADdmg/*HABILITY*/ = 0;
+ResAP/*HABILITY*/ = 0;
+APdmg/*HABILITY*/ = 0;
+

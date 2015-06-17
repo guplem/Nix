@@ -1,0 +1,22 @@
+• Fixed bug that allows the enemies attack the player with a wall between they.
+• Added new ability: Spin
+• Added experience system.
+• Blocked horizontal movement and increased the vertical speed if the player uses the vertical dash.
+• Added stats info pressing the tab key.
+• Added particles
+	- Blood
+	- Dust meanwhile the walk
+	- Die enemy
+• Added loading and saving system that adds a profile system too
+• Added more functions in in-game menus
+	- Save
+	- Change configuration
+• Set the default screen mode to borderless
+• Improved the F3 information in-game
+• Added HUD
+	- Top-Left: health, experience, stamina and level
+	- Bottom-Left: cooldowns and ability points abaliables
+• Added system to improve the qualities of the player with ability ponts that you receive when increases your level.
+• Added vertical camera movement
+• Created the first world with the first level (continue being a test)
+• Added textures to the level

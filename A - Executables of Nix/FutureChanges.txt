@@ -1,0 +1,38 @@
+• Add "server error" to test updates
+• Fix Bug AI player in edge
+• Add more particles
+	- Habilities / Attacks
+	- Exp
+• Jump obstacle if it is not tall and the player is using the sprint.
+• Add new enemies
+• Improve textures
+• Add objects and indicators in tutorial room
+• Add gamepad input
+• Add personalizable controls
+• Add screenshots (F4)
+• Add textures in menus
+• Enemies HP bar (customizable)
+• Add regress with esc in all menus
+• Add block attack with "F"
+• Change menus
+   - Settings
+	- Updates
+	   - Stable version auto update
+	   - Test version auto update
+	- Language
+	   - Choose Lang
+	- Sound
+	   - Music
+	   - FX
+	   - Ambient
+	- Controls
+	- Quit save option (for autosave)
+   - Modify maps and lvls choosers menus
+• Add language system
+• Add delete all instances changing the 
+• Change death enemy particles for phisic particles
+• Add BSO
+• Add ambient sound
+• Add FX sounds
+• Improve animations
+• Add textures/animation of the enemies

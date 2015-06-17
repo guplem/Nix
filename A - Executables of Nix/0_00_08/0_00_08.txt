@@ -1,0 +1,7 @@
+Added more options in the settings menu
+	- Caontrols
+	- Languages
+	- Updates
+	- Sound
+Añadida música de fondo
+Fixed bugs
